@@ -240,7 +240,7 @@ var selorax = {
   ui: {
     /**
      * Set the title bar for this extension.
-     * @param {{ title: string, breadcrumbs?: Array<{label: string}>, primaryAction?: {label: string}, secondaryActions?: Array<{label: string}> }} config
+     * @param {{ title: string, breadcrumbs?: Array<{label: string, url?: string}>, primaryAction?: {label: string}, secondaryActions?: Array<{label: string}> }} config
      */
     titleBar: function titleBar(config) {
       postToHost('selorax:ui_titlebar', { config: config });
@@ -628,6 +628,7 @@ function handleHostMessage(event) {
         selorax.i18n.locale = data.context.locale;
       }
       _initialized = true;
+      _contextListeners.forEach(function(fn) { fn(selorax.context); });
       break;
 
     case 'selorax:context_update':
@@ -688,6 +689,12 @@ function handleHostMessage(event) {
   }
 }
 
+selorax._destroy = function() {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('message', handleHostMessage);
+  }
+};
+
 // Auto-setup when loaded in a browser environment
 if (typeof window !== 'undefined') {
   window.addEventListener('message', handleHostMessage);
@@ -695,3 +702,4 @@ if (typeof window !== 'undefined') {
 }
 
 module.exports = selorax;
+module.exports.default = selorax;
