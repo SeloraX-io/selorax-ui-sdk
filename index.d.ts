@@ -368,9 +368,9 @@ export interface ResourceItemProps {
 // Compound
 export interface TabsProps {
   tabs: Array<{
-    id: string;
+    value: string;
     label: string;
-    content: UINode | UINode[];
+    children: UINode[];
     icon?: string;
   }>;
   selected?: string;
@@ -895,6 +895,9 @@ export interface Selorax {
    * @returns An unsubscribe function.
    */
   onTitleBarAction(callback: (event: { action_type: 'primary' | 'secondary'; index?: number }) => void): () => void;
+
+  /** Remove the global message listener. Call when tearing down. */
+  _destroy(): void;
 }
 
 export const selorax: Selorax;

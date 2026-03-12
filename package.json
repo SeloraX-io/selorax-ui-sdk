@@ -1,6 +1,6 @@
 {
   "name": "@selorax/ui",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "SeloraX Extension UI SDK — build extensions for the SeloraX platform",
   "main": "index.js",
   "module": "index.mjs",
